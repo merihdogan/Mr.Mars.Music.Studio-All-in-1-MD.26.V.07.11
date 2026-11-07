@@ -157,7 +157,7 @@
           const y = h - U.clamp((data[i] + 100) / 100, 0, 1) * h;
           x ? g.lineTo(x, y) : g.moveTo(x, y);
         }
-        g.strokeStyle = '#4fd1c5'; g.lineWidth = 1.5; g.stroke();
+        g.strokeStyle = '#eeeeee'; g.lineWidth = 1.5; g.stroke();
         requestAnimationFrame(draw);
       };
       requestAnimationFrame(draw);

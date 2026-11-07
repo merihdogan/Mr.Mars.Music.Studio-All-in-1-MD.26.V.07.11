@@ -1,6 +1,15 @@
-MR. MARS MUSIC STUDIO ALL IN 1 — DGN.V.06 · MRH DGN
+MR. MARS MUSIC STUDIO ALL IN 1 — M.D. 26. V.07.11 · MRH DGN
 Portable, install-free, offline music production environment
 Illustrated manual: press ❓ Manual beside the top menus, or open "User Manual_en_english.pdf".
+
+NEW IN M.D. 26. V.07.11
+- Premium minimal look: charcoal panels, black knobs with a thin white value arc, a red LED for
+  what is on or selected, a dark keyboard and muted track colours.
+- DJ library "Build set…": starting at the selected track, builds a key- and BPM-compatible set
+  from the visible list and queues it in Automix. Automix "Harmonic order" re-sorts the queue.
+- DJ history: Tracklist (timestamps for a mix description), CUE sheet for a recorded mix, CSV.
+- Unmapped controller buttons show a chip with "Assign"; the device list names missing basics.
+- Fixed: Industrial FX synth notes, Sampler sounds before a sample is loaded.
 ================================================================
 
 STARTING
@@ -129,6 +138,8 @@ DJ MIXER DETAILS
 - Pad pages: Hot Cue 1-8 and 9-16, Loop Roll (Shift: 3/4), Slicer, Beat Jump, Loop, Loop+
   (1/32-128), Cue Loop, Key Cue, Stem, Stem + FX, Manual Loop, Saved Loop, Remix Points (section
   starts found automatically), Scratch (8 ready patterns).
+- Mr.DOGAN button in the DJ library: lists the artist's SoundCloud tracks and updates with that page. Listen with
+  the official player. Tracks whose file is on this site load to a deck for mixing. No other address can be added.
 - Sampler: unlimited banks, 16 pads per bank; On/Off, Stutter, Hold, Loop and Unmute triggers;
   output to master or a deck; record 4/8/16/32 beats to a pad from master or a deck.
   Ready banks in the bank list: DJ Effects (riser, impact, air horn, siren, laser...) and

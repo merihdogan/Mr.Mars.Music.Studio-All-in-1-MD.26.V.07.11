@@ -95,7 +95,7 @@
         g.strokeStyle = 'rgba(255,255,255,.08)';
         [100, 1000, 10000].forEach(f => { const x = Math.log(f / 20) / Math.log(1000) * w; g.beginPath(); g.moveTo(x, 0); g.lineTo(x, h); g.stroke(); });
         g.beginPath(); g.moveTo(0, h / 2); g.lineTo(w, h / 2); g.stroke();
-        g.strokeStyle = '#4fd1c5'; g.lineWidth = 2; g.beginPath();
+        g.strokeStyle = '#eeeeee'; g.lineWidth = 2; g.beginPath();
         for (let i = 0; i < 256; i++) { const x = i / 255 * w, y = h / 2 - U.clamp(tot[i], -24, 24) / 24 * (h / 2 - 4); i ? g.lineTo(x, y) : g.moveTo(x, y); }
         g.stroke();
         requestAnimationFrame(draw);

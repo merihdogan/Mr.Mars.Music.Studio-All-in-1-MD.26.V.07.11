@@ -85,8 +85,8 @@
       g.fillStyle = '#1a1c21'; g.fillRect(0, 0, w, H);
       for (let p = 0; p < 128; p++) {
         if ([1, 3, 6, 8, 10].includes(p % 12)) { g.fillStyle = '#15171b'; g.fillRect(0, yOf(p), w, PR.rowH); }
-        if (PR.scale !== 'Kromatik') { if (!inScale(p)) { g.fillStyle = 'rgba(0,0,0,.35)'; g.fillRect(0, yOf(p), w, PR.rowH); } else if (((p - PR.root) % 12 + 12) % 12 === 0) { g.fillStyle = 'rgba(79,209,197,.08)'; g.fillRect(0, yOf(p), w, PR.rowH); } }
-        if (drumMap && drumMap[p]) { g.fillStyle = 'rgba(79,209,197,.04)'; g.fillRect(0, yOf(p), w, PR.rowH); }
+        if (PR.scale !== 'Kromatik') { if (!inScale(p)) { g.fillStyle = 'rgba(0,0,0,.35)'; g.fillRect(0, yOf(p), w, PR.rowH); } else if (((p - PR.root) % 12 + 12) % 12 === 0) { g.fillStyle = 'rgba(255,255,255,.08)'; g.fillRect(0, yOf(p), w, PR.rowH); } }
+        if (drumMap && drumMap[p]) { g.fillStyle = 'rgba(255,255,255,.04)'; g.fillRect(0, yOf(p), w, PR.rowH); }
         g.fillStyle = p % 12 === 0 ? '#2c313b' : '#202329'; g.fillRect(0, yOf(p) + PR.rowH - 1, w, 1);
       }
       const bpb = OS.project.sig[0];

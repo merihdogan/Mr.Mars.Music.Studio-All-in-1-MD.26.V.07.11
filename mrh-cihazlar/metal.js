@@ -406,7 +406,7 @@
       const subHit = (t, f, dur, v) => { if (p.sub < 0.02) return; const g = gEnv(t, v * p.sub * 0.8, 0.005, dur); O(t, 'sine', f * 2, dur, g, f, 0.08); };
       function play(n, vel, t) {
         const v = (vel == null ? 100 : vel) / 127, i = n - IND_BASE;
-        if (i < 0 || i >= 90) return synth(n, v, t);
+        if (i < 0 || i >= 78) return synth(n, v, t); // son oktav: adındaki notada çalan bozuk synth
         const c = Math.floor(i / 6), k = i % 6, r = rnd(n * 977 + 13), varr = 0.8 + k * 0.08;
         switch (c) {
           case 0: { const g = gEnv(t, v, 0.002, 0.5 * varr), d = dist(g, 6 + k * 2); O(t, 'sine', 220 * varr, 0.6, d, 42 * varr, 0.07); N(t, 0.02, d, 'highpass', 3000); subHit(t, 45, 0.6, v); break; }
@@ -427,7 +427,7 @@
         const g = ctx.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(v * 0.35, t + 0.008); g.connect(bus);
         const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.setValueAtTime(6000, t); lp.frequency.exponentialRampToValueAtTime(1800, t + 0.6); lp.Q.value = 3;
         const d = dist(lp, 4); d.connect(g);
-        const f = U.midiToFreq(n >= IND_BASE + 78 ? n - 60 : n);
+        const f = U.midiToFreq(n >= IND_BASE + 78 && n < IND_BASE + 90 ? 48 + (n - IND_BASE - 78) : n);
         const os = [O(t, 'sawtooth', f, 0, d), O(t, 'square', f * 1.005, 0, d), O(t, 'sawtooth', f / 2, 0, d)];
         const vc = { g, os }; held.set(n, vc);
       }

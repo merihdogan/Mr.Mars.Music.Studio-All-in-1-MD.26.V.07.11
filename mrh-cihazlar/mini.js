@@ -228,9 +228,9 @@
       for (let i = 1; i < 8; i++) { g.beginPath(); g.moveTo(i * w / 8, 0); g.lineTo(i * w / 8, h); g.stroke(); g.beginPath(); g.moveTo(0, i * h / 8); g.lineTo(w, i * h / 8); g.stroke(); }
       const t = performance.now();
       while (trail.length && t - trail[0].t > 600) trail.shift();
-      trail.forEach(q => { const a = 1 - (t - q.t) / 600; g.fillStyle = `rgba(79,209,197,${a * 0.5})`; g.beginPath(); g.arc(q.x * w, (1 - q.y) * h, 10 * a + 2, 0, 7); g.fill(); });
+      trail.forEach(q => { const a = 1 - (t - q.t) / 600; g.fillStyle = `rgba(255,255,255,${a * 0.4})`; g.beginPath(); g.arc(q.x * w, (1 - q.y) * h, 10 * a + 2, 0, 7); g.fill(); });
       const on = dev.values.touch >= 0.5 || dev.values.hold >= 0.5;
-      g.fillStyle = on ? '#4fd1c5' : 'rgba(255,255,255,.35)';
+      g.fillStyle = on ? '#ff3b30' : 'rgba(255,255,255,.35)';
       g.beginPath(); g.arc(dev.values.x * w, (1 - dev.values.y) * h, on ? 12 : 7, 0, 7); g.fill();
       g.fillStyle = 'rgba(255,255,255,.55)'; g.font = '12px Segoe UI';
       g.fillText(OS.t(OS.XY_MODES[Math.round(dev.values.mode)] || ''), 10, 18);

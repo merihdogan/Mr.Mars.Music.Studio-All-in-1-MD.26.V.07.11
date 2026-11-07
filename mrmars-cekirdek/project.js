@@ -1,7 +1,7 @@
 /* Mr. Mars Music Studio · MRH DGN — proje modeli, geri al, kalıcı depolama */
 (function (OS) {
   const U = OS.U, E = OS.engine;
-  const COLORS = ['#e25d5d', '#e2915d', '#d9c24a', '#7cc95b', '#4fc1a8', '#4fa3d1', '#6d7fe0', '#a16de0', '#d16db8', '#9aa3ad'];
+  const COLORS = ['#b8605a', '#b8845e', '#ada05c', '#7d9e68', '#5f9a8c', '#5f88a3', '#7279ad', '#8b74aa', '#a57198', '#8c8c8c'];
   OS.TRACK_COLORS = COLORS;
 
   OS.settings = Object.assign({ inputId: '', outputId: '', latencyMs: null, midiIn: 'all' }, (() => { try { return JSON.parse(localStorage.getItem('os.settings') || '{}'); } catch (e) { return {}; } })());

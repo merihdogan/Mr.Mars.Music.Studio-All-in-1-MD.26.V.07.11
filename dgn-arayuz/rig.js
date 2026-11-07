@@ -249,7 +249,7 @@
         custom, ctrls);
     }
     const led = el('div', { class: 'led' + (d.bypass ? '' : ' on') });
-    return el('div', { class: 'pedal', style: { background: COLORS[d.pluginId] || '#8aa' } },
+    return el('div', { class: 'pedal', style: '--pc:' + (COLORS[d.pluginId] || '#8aa') },
       el('span', { class: 'x', onclick: remove, title: 'Kaldır' }, '✕'),
       el('div', { class: 'pt' }, OS.t(d.def.name).replace(' Pedalı', '').replace(' Pedal', '')),
       custom, ctrls,
@@ -373,7 +373,7 @@
     if (histCv && histCv.isConnected) {
       const w = histCv.width = histCv.clientWidth, h = histCv.height = histCv.clientHeight, g = histCv.getContext('2d');
       g.clearRect(0, 0, w, h); g.fillStyle = 'rgba(57,194,122,.18)'; g.fillRect(0, h / 2 - h * 0.05, w, h * 0.1);
-      g.strokeStyle = '#4fd1c5'; g.beginPath(); let started = false;
+      g.strokeStyle = '#eeeeee'; g.beginPath(); let started = false;
       hist.forEach((c, i) => { if (c == null) { started = false; return; } const x = i / 119 * w, y = h / 2 - c / 50 * (h / 2); started ? g.lineTo(x, y) : g.moveTo(x, y); started = true; });
       g.stroke();
     }

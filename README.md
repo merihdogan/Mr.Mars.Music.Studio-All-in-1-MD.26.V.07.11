@@ -1,6 +1,6 @@
-<p align="center"><a href="https://merihdogan.github.io/Mr.Mars.Music.Studio-All-in-1/"><img src="mrmars-gorseller/canli-dene.svg" alt="Try the live app" width="520"></a></p>
+<p align="center"><a href="https://merihdogan.github.io/Mr.Mars.Music.Studio-All-in-1-MD.26.V.07.11/"><img src="mrmars-gorseller/canli-dene.svg" alt="Try the live app" width="520"></a></p>
 
-<p align="center"><a href="https://merihdogan.github.io/Mr.Mars.Music.Studio-All-in-1/"><img src="mrmars-gorseller/tanitim-kart.png" alt="Mr. Mars Music Studio All in 1" width="820"></a></p>
+<p align="center"><a href="https://merihdogan.github.io/Mr.Mars.Music.Studio-All-in-1-MD.26.V.07.11/"><img src="mrmars-gorseller/tanitim-kart.png" alt="Mr. Mars Music Studio All in 1" width="820"></a></p>
 
 <h1 align="center">A full music studio in your browser</h1>
 
@@ -21,7 +21,7 @@
 
 <p align="center"><img src="mrmars-gorseller/tanitim-dj.jpg" alt="DJ Mixer" width="49%"> <img src="mrmars-gorseller/tanitim-amfi.jpg" alt="Amp Rack" width="49%"></p>
 
-<p align="center"><a href="https://merihdogan.github.io/Mr.Mars.Music.Studio-All-in-1/"><img src="mrmars-gorseller/canli-dene.svg" alt="Try the live app" width="520"></a></p>
+<p align="center"><a href="https://merihdogan.github.io/Mr.Mars.Music.Studio-All-in-1-MD.26.V.07.11/"><img src="mrmars-gorseller/canli-dene.svg" alt="Try the live app" width="520"></a></p>
 
 ## Every tab is a studio of its own
 
@@ -57,7 +57,7 @@
 
 ---
 
-MR. MARS MUSIC STUDIO ALL IN 1 — DGN.V.06 ·
+MR. MARS MUSIC STUDIO ALL IN 1 — M.D. 26. V.07.11 ·
 
 From Traditional to Universal: Limitless Performance  
 Mr.Mars Studio originally began as a dedicated tool to streamline live performances for musicians blending electric guitar and saz with DJ gear.  
@@ -65,7 +65,7 @@ Today, it has evolved into a universally compatible ecosystem—empowering artis
 While versatile enough to create any genre through DJ tools and MIDI controllers, at its core, it is a unique Euro-Turk innovation that fuses Northern European and Eastern cultures, synthesizing traditional instruments with modern musical disciplines.  
 Its plugin expandability and seamless integration with industry-standard DJ equipment elevate Mr.Mars Studio into a truly global league.
 
-**User Manual:** [PDF](User%20Manual_en_english.pdf) · [Web page](https://merihdogan.github.io/Mr.Mars.Music.Studio-All-in-1/User%20Manual_en_english.html). In the app, press ❓ Manual beside the top menus.
+**User Manual:** [PDF](User%20Manual_en_english.pdf) · [Web page](https://merihdogan.github.io/Mr.Mars.Music.Studio-All-in-1-MD.26.V.07.11/User%20Manual_en_english.html). In the app, press ❓ Manual beside the top menus.
 
 ================================================================
 

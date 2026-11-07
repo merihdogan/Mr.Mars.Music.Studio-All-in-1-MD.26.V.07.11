@@ -1,6 +1,14 @@
-MR. MARS MUSIC STUDIO ALL IN 1 — DGN.V.06 · MRH DGN
+MR. MARS MUSIC STUDIO ALL IN 1 — M.D. 26. V.07.11 · MRH DGN
 Bärbar musikproduktionsmiljö utan installation och utan internet
 Illustrerad handbok (engelska): tryck på ❓ Manual bredvid toppmenyerna eller öppna "User Manual_en_english.pdf".
+
+NYTT I M.D. 26. V.07.11
+- Premium minimalistiskt utseende: koltonade paneler, svarta rattar med tunn vit båge, röd LED
+  för det som är på eller valt, mörkt klaviatur och dämpade spårfärger.
+- DJ-biblioteket "Bygg set…": från valt spår byggs ett tonart- och BPM-kompatibelt set som köas
+  i Automix. "Harmonisk ordning" sorterar om kön.
+- DJ-historik: tidsstämplad spårlista, CUE-fil för en inspelad mix, CSV.
+- Åtgärdat: Industrial FX-syntens toner, samplern låter även innan ett sampel laddats.
 ================================================================
 
 START
@@ -94,6 +102,7 @@ DJ-MIXERN I DETALJ
 - Deck: broms, spinback, baklänges, TAP för BPM, flytta beatgrid, 3 FX-platser per deck, Master FX.
 - Padsidor: Hot Cue 1-8 och 9-16, Loop Roll, Slicer, Beat Jump, loopar (1/32-128), Cue Loop,
   Key Cue, stems, Stem + FX, manuell och sparad loop, Remix-punkter, Scratch (8 mönster).
+- Mr.DOGAN i DJ-biblioteket: artistens SoundCloud-låtar. Låtar med fil på webbplatsen kan läsas in på en deck.
 - Sampler: banker, 16 pads, lägena On/Off, Stutter, Hold, Loop, Unmute, inspelning 4-32 slag.
   Förvalsbanker i banklistan: DJ-effekter och Inspelade trummor (verkliga inspelningar, allmän egendom).
 - Bibliotek: ID3-taggar och omslag, betyg, förlyssning, filter för passande tonarter.

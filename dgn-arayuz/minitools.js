@@ -40,11 +40,11 @@
       const cw = w / ns.length;
       ns.forEach((n, i) => {
         const isRoot = ((n - XS.root) % 12 + 12) % 12 === 0;
-        g.fillStyle = cur === n ? 'rgba(79,209,197,.35)' : isRoot ? 'rgba(255,255,255,.06)' : 'transparent'; g.fillRect(i * cw, 0, cw, h);
+        g.fillStyle = cur === n ? 'rgba(255,255,255,.18)' : isRoot ? 'rgba(255,255,255,.06)' : 'transparent'; g.fillRect(i * cw, 0, cw, h);
         g.fillStyle = 'rgba(255,255,255,.08)'; g.fillRect(i * cw, 0, 1, h);
         g.fillStyle = isRoot ? '#ffd98a' : 'rgba(255,255,255,.5)'; g.font = '10px Segoe UI'; g.fillText(U.noteName(n), i * cw + 3, h - 5);
       });
-      if (pos) { g.fillStyle = '#4fd1c5'; g.beginPath(); g.arc(pos.x * w, (1 - pos.y) * h, 13, 0, 7); g.fill(); }
+      if (pos) { g.fillStyle = '#ff3b30'; g.beginPath(); g.arc(pos.x * w, (1 - pos.y) * h, 13, 0, 7); g.fill(); }
       requestAnimationFrame(draw);
     }
     function at(e) {

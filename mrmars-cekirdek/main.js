@@ -302,7 +302,7 @@
     [...OS.LANGS].sort((a, b) => OS.LANG_NAMES[a].localeCompare(OS.LANG_NAMES[b])).forEach(c => items.push({ label: (!OS.langAuto && OS.lang === c ? '✓ ' : '') + OS.LANG_NAMES[c], onclick: () => OS.setLang(c) }));
     return items;
   }
-  ui.VERSION = 'DGN.V.06';
+  ui.VERSION = 'M.D. 26. V.07.11';
   OS.YAPIMCI = 'MRH DGN';
   ui.openManual = () => window.open(encodeURI('User Manual_en_english.html'), '_blank');
   function about() {

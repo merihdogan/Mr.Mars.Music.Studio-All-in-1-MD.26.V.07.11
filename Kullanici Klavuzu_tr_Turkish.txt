@@ -1,6 +1,16 @@
-MR. MARS MUSIC STUDIO ALL IN 1 — DGN.V.06 · MRH DGN
+MR. MARS MUSIC STUDIO ALL IN 1 — M.D. 26. V.07.11 · MRH DGN
 Taşınabilir, kurulumsuz, internetsiz müzik yapım ortamı
 Görselli kılavuz (İngilizce): üst menülerin yanındaki ❓ Kılavuz düğmesine basın veya "User Manual_en_english.pdf" dosyasını açın.
+
+M.D. 26. V.07.11 İLE GELENLER
+- Premium sade görünüm: kömür grisi paneller, ince beyaz değer yaylı siyah düğmeler, açık veya
+  seçili olan için kırmızı LED, koyu klavye ve yumuşak kanal renkleri.
+- DJ kütüphanesinde "Set kur…": seçili parçadan başlayarak görünen listeden ton ve BPM uyumlu
+  bir set kurar, Automix kuyruğuna dizer. Automix'teki "Uyumlu sırala" kuyruğu yeniden sıralar.
+- DJ geçmişi: Tracklist (mix açıklaması için zaman damgaları), kaydedilmiş mix için CUE, CSV.
+- Eşlenmemiş kontrolcü tuşları "Ata" düğmeli bir etiket gösterir; cihaz listesi eksik temel
+  kontrolleri yazar.
+- Düzeltildi: Industrial FX synth notaları, Sampler örnek yüklenmeden de ses verir.
 ================================================================
 
 BAŞLATMA
@@ -132,6 +142,8 @@ DJ MİKSER AYRINTILARI
 - Ped sayfaları: Hot Cue 1-8 ve 9-16, Loop Roll (Shift: 3/4), Slicer, Beat Jump, Döngü, Döngü+
   (1/32-128), Cue Loop, Key Cue, Stem, Stem + FX, Manuel Döngü, Kayıtlı Döngü, Remix Noktaları
   (bölüm başları otomatik bulunur), Scratch (8 hazır kalıp).
+- DJ kütüphanesindeki Mr.DOGAN düğmesi: sanatçının SoundCloud parçalarını listeler, sayfayla birlikte güncellenir.
+  Resmî oynatıcıyla dinlenir. Dosyası bu sitede olan parçalar decke yüklenip mikslenir. Başka adres eklenemez.
 - Sampler: sınırsız banka, bankada 16 ped; Aç/Kapa, Stutter, Basılı tut, Döngü, Unmute
   tetikleme; çıkış master veya bir deck; master'dan ya da deck'ten 4/8/16/32 vuruş pede kayıt.
   Banka listesinde hazır bankalar: DJ Efektleri (yükseliş, darbe, korna, siren, lazer...)

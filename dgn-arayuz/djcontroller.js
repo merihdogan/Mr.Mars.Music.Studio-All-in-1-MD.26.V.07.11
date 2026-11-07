@@ -21,6 +21,33 @@
   ];
   C.continuous = a => { const k = a.includes('.') ? a.slice(a.indexOf('.') + 1) : a; return /^(vol|pitch|jog|eq\w+|filter|trim|fx\d?|res|send[AB]|scroll|loopenc|jumpenc|jogseek)$/.test(k) || ['xfader', 'master', 'cuemix', 'cuevol', 'samplervol', 'mfx', 'xcurve'].includes(a); };
 
+  // ---------------- Hazır tablodaki boşluklar ve eşlenmemiş kontroller ----------------
+  const BASICS = [['play', 'Çal'], ['cue', 'Cue'], ['sync', 'Sync'], ['vol', 'Kanal fader'], ['pitch', 'Tempo'], ['eqhigh', 'EQ tiz'], ['eqmid', 'EQ orta'], ['eqlow', 'EQ bas'], ['jog', 'Jog']];
+  C.gaps = name => {
+    const m = C.presetFor(name); if (!m) return [];
+    const cmds = Object.values(m), out = [];
+    BASICS.forEach(([k, label]) => { if (!['A', 'B'].every(L => cmds.includes(L + '.' + k))) out.push(label); });
+    if (!cmds.includes('xfader')) out.push('Crossfader');
+    return out;
+  };
+  // Haritada karşılığı olmayan bir kontrol kullanılınca küçük bir uyarı çıkar; tıklayınca o kontrol atanır
+  let chipT = 0;
+  C.unmapped = key => {
+    const now = performance.now(); if (now - chipT < 400) { if (C._chipKey === key) return; }
+    chipT = now; C._chipKey = key;
+    let chip = document.getElementById('unmapped-chip');
+    if (!chip) {
+      chip = el('div', { id: 'unmapped-chip', style: 'position:fixed;left:12px;bottom:64px;z-index:9999;display:flex;gap:8px;align-items:center;background:var(--bg3);border:1px solid var(--line2);border-radius:8px;padding:6px 10px;box-shadow:0 6px 20px rgba(0,0,0,.45);font-size:12px' });
+      document.body.appendChild(chip);
+    }
+    chip.innerHTML = '';
+    chip.append(el('span', null, OS.t('Eşlenmemiş kontrol') + ': '), el('b', { class: 'mono' }, key),
+      el('button', { class: 'btn sm primary', onclick: () => { chip.remove(); C.last = key; C.open(); setTimeout(() => { C.last = key; if (C.drawAssign) C.drawAssign(); }, 60); } }, OS.t('Ata')),
+      el('button', { class: 'btn sm', onclick: () => { chip.remove(); C.mutedUnmapped = true; } }, '×'));
+    if (C.mutedUnmapped) chip.remove();
+    clearTimeout(C._chipHide); C._chipHide = setTimeout(() => chip.remove(), 6000);
+  };
+
   // ---------------- Canlı sinyal izleme ----------------
   DJ.monitor = function (key, data) {
     C.last = key; if (C.drawAssign) C.drawAssign(); C.flash(key);
@@ -255,7 +282,7 @@
         el('button', { class: 'btn sm', onclick: () => C.saveProfile(name) }, 'Profil kaydet'),
         (s.profiles && s.profiles[name]) ? el('button', { class: 'btn sm', onclick: () => { C.loadProfile(name); U.toast(OS.t('Profil yüklendi')); } }, 'Profili yükle') : null,
         C.presetFor(name) ? el('button', { class: 'btn sm', title: OS.t('Kendi değişikliklerinizi silip cihazın hazır eşlemesine döner'), onclick: () => { C.applyPreset(name, false); U.toast(OS.t('Hazır eşleme yüklendi')); C.drawAssign && C.drawAssign(); DJ.render(); } }, 'Hazır eşlemeye dön') : null);
-      midiIns().forEach(i => devices.appendChild(row(i.name, 'MIDI', midiOuts().some(o => o.name === i.name))));
+      midiIns().forEach(i => { devices.appendChild(row(i.name, 'MIDI', midiOuts().some(o => o.name === i.name))); const g = C.gaps(i.name); if (g.length) devices.appendChild(el('div', { class: 'muted', style: 'font-size:12px;padding:0 6px 6px' }, OS.t('Bu modelin hazır tablosunda olmayanlar') + ': ' + g.map(x => OS.t(x)).join(', ') + '. ' + OS.t('Cihazda bu kontrole dokunup aşağıdan atayın; atama cihaza kaydedilir.'))); });
       C.hid.forEach(h => devices.appendChild(row(h.name, 'HID')));
       if (!midiIns().length && !C.hid.length) devices.appendChild(el('div', { class: 'muted' }, OS.t(OS.midiAccess ? 'Bağlı controller yok. USB’yi takın; liste kendiliğinden yenilenir.' : !navigator.requestMIDIAccess ? 'Bu tarayıcı MIDI desteklemiyor. iPhone ve iPad’de hiçbir tarayıcıda yoktur; Mac’te Safari’de de yoktur.' : 'MIDI izni verilmedi veya tarayıcı desteklemiyor.')));
     };

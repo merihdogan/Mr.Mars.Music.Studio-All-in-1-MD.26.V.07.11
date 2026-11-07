@@ -6,8 +6,8 @@
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#16181d",
-  "theme_color": "#16181d",
+  "background_color": "#141414",
+  "theme_color": "#141414",
   "icons": [
     { "src": "mrmars-gorseller/icon-128.png", "sizes": "128x128", "type": "image/png" },
     { "src": "mrmars-gorseller/icon-256.png", "sizes": "256x256", "type": "image/png" },

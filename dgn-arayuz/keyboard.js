@@ -47,15 +47,15 @@
     g.clearRect(0, 0, cv.clientWidth, H);
     const { whites, w } = layout();
     whites.forEach((n, i) => {
-      g.fillStyle = pressed.has(n) ? '#4fd1c5' : '#e8eaee'; g.fillRect(i * w, 0, w - 1, H);
-      if (n % 12 === 0) { g.fillStyle = '#666'; g.font = '9px Segoe UI'; g.fillText('C' + (n / 12 - 1), i * w + 2, H - 4); }
+      g.fillStyle = pressed.has(n) ? '#ff3b30' : '#3b3b3b'; g.fillRect(i * w, 0, w - 1, H);
+      if (n % 12 === 0) { g.fillStyle = '#8a8a8a'; g.font = '9px Segoe UI'; g.fillText('C' + (n / 12 - 1), i * w + 2, H - 4); }
     });
     whites.forEach((n, i) => {
       const b = n + 1;
-      if (b <= hi && [1, 3, 6, 8, 10].includes(b % 12)) { g.fillStyle = pressed.has(b) ? '#2a9d93' : '#1b1d22'; g.fillRect(i * w + w * 0.65, 0, w * 0.7, H * 0.6); }
+      if (b <= hi && [1, 3, 6, 8, 10].includes(b % 12)) { g.fillStyle = pressed.has(b) ? '#c9302a' : '#121212'; g.fillRect(i * w + w * 0.65, 0, w * 0.7, H * 0.6); }
     });
     const qlo = (K.octave + 1) * 12;
-    if (K.qwerty) { const i0 = whites.indexOf(qlo); if (i0 >= 0) { g.fillStyle = 'rgba(79,209,197,.35)'; g.fillRect(i0 * w, H - 4, w * 10, 4); } }
+    if (K.qwerty) { const i0 = whites.indexOf(qlo); if (i0 >= 0) { g.fillStyle = 'rgba(255,59,48,.6)'; g.fillRect(i0 * w, H - 4, w * 10, 4); } }
   }
   function noteAt(e) {
     const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;

@@ -2,7 +2,7 @@
    QR kodla eşleşen telefona doğrudan gönderir. Dosya hiçbir sunucuya yüklenmez. */
 (function (OS) {
   const U = OS.U, el = U.el, ui = OS.ui, E = OS.engine, Link = window.OSLink;
-  const PAGE = 'https://merihdogan.github.io/Mr.Mars.Music.Studio-All-in-1/telefon.html';
+  const PAGE = 'https://merihdogan.github.io/Mr.Mars.Music.Studio-All-in-1-MD.26.V.07.11/telefon.html';
   const P = OS.phone = { base: null, link: null, stream: null };
   const pageUrl = () => P.base || (/^https?:$/.test(location.protocol) ? new URL('telefon.html', location.href).href : PAGE);
   const wait = ms => new Promise(r => { if (ms) { setTimeout(r, ms); return; } const c = new MessageChannel(); c.port1.onmessage = () => r(); c.port2.postMessage(0); });
@@ -149,10 +149,10 @@
     const seconds = ab.duration, frames = Math.max(1, Math.ceil(seconds));
     const paint = k => {
       g.fillStyle = '#10141a'; g.fillRect(0, 0, W, H);
-      g.fillStyle = '#4fd1c5'; g.font = 'bold 34px sans-serif'; g.textAlign = 'center'; g.fillText('Mr. Mars Music Studio', W / 2, 90);
+      g.fillStyle = '#eeeeee'; g.font = 'bold 34px sans-serif'; g.textAlign = 'center'; g.fillText('Mr. Mars Music Studio', W / 2, 90);
       g.fillStyle = '#e8edf2'; g.font = '30px sans-serif'; g.fillText(String(title).slice(0, 38), W / 2, 150);
       const bw = (W - 80) / bars, mid = H / 2 + 30;
-      for (let i = 0; i < bars; i++) { const h = Math.max(2, peaks[i] * 200); g.fillStyle = i / bars <= k ? '#4fd1c5' : '#37414d'; g.fillRect(40 + i * bw, mid - h, Math.max(1, bw - 1), h * 2); }
+      for (let i = 0; i < bars; i++) { const h = Math.max(2, peaks[i] * 200); g.fillStyle = i / bars <= k ? '#eeeeee' : '#3a3a3a'; g.fillRect(40 + i * bw, mid - h, Math.max(1, bw - 1), h * 2); }
       const s = Math.floor(k * seconds), f = v => String(v).padStart(2, '0');
       g.fillStyle = '#9aa7b4'; g.font = '26px monospace'; g.fillText(f(Math.floor(s / 60)) + ':' + f(s % 60), W / 2, H - 60);
     };

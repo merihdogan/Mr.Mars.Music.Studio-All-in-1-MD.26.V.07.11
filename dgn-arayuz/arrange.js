@@ -434,9 +434,9 @@
     g.clearRect(0, 0, w, h);
     // döngü bölgesi
     const L = Pp.loop;
-    g.fillStyle = L.on ? 'rgba(79,209,197,.25)' : 'rgba(160,160,160,.12)';
+    g.fillStyle = L.on ? 'rgba(255,255,255,.14)' : 'rgba(160,160,160,.12)';
     g.fillRect(L.start * z - sl, 0, (L.end - L.start) * z, h);
-    g.fillStyle = L.on ? '#4fd1c5' : '#6c7484';
+    g.fillStyle = L.on ? '#e8e8e8' : '#6c7484';
     g.fillRect(L.start * z - sl, 0, 2, h); g.fillRect(L.end * z - sl - 2, 0, 2, h);
     g.fillStyle = '#9aa3b2'; g.strokeStyle = '#555c6a'; g.font = '11px Segoe UI';
     const barPx = z * bpb, every = Math.max(1, Math.ceil(40 / barPx));

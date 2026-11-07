@@ -260,6 +260,9 @@
     create(ctx, host) {
       const out = ctx.createGain(), filt = ctx.createBiquadFilter(); filt.type = 'lowpass'; filt.connect(out);
       const p = {}; let buffer = null, name = '';
+      // Örnek yüklenene kadar sessiz kalmasın: Do4 üzerinde yumuşak, sönen bir tuş sesi
+      const fallback = (() => { const sr = ctx.sampleRate, n = Math.floor(sr * 2.2), b = ctx.createBuffer(1, n, sr), d = b.getChannelData(0), f = 261.6256; for (let i = 0; i < n; i++) { const t = i / sr, e = Math.exp(-t * 2.2) * Math.min(1, t * 400); d[i] = e * (0.55 * Math.sin(2 * Math.PI * f * t) + 0.25 * Math.exp(-t * 3) * Math.sin(2 * Math.PI * 2 * f * t) + 0.12 * Math.exp(-t * 5) * Math.sin(2 * Math.PI * 3 * f * t)); } return b; })();
+      buffer = fallback;
       const voices = [];
       return {
         output: out,
@@ -268,7 +271,7 @@
           if (!buffer) return;
           t = Math.max(t || 0, ctx.currentTime);
           const s = ctx.createBufferSource(), g = ctx.createGain();
-          s.buffer = buffer; s.playbackRate.value = U.midiToFreq(n) / U.midiToFreq12(Math.round(p.root)) * Math.pow(2, p.tune / 1200);
+          s.buffer = buffer; s.playbackRate.value = U.midiToFreq(n) / U.midiToFreq12(buffer === fallback ? 60 : Math.round(p.root)) * Math.pow(2, p.tune / 1200);
           if (p.loop >= 0.5) { s.loop = true; s.loopStart = p.start * buffer.duration; s.loopEnd = buffer.duration; }
           s.connect(g); g.connect(filt);
           const v = (vel == null ? 100 : vel) / 127;

@@ -512,6 +512,7 @@
     return pads;
   }
 
+  DJ._fn = { bandPeaks: (...a) => bandPeaks(...a), trailingEnd: (...a) => trailingEnd(...a), measureLevel: (...a) => measureLevel(...a) };
   DJ.init = function () { root = document.getElementById('view-dj'); OS.midiHooks = OS.midiHooks || []; OS.midiHooks.push(onMidi); };
 
   // ---------------- Arayüz ----------------
@@ -834,7 +835,7 @@
     g.fillStyle = 'rgba(0,0,0,.45)'; g.fillRect(0, 0, p / dur * w, h);
     d.hot.forEach(t => { if (t != null) { g.fillStyle = '#9a74f0'; g.fillRect(t / dur * w, 0, 2, h); } });
     g.fillStyle = '#f5b942'; g.fillRect(d.cue / dur * w, 0, 2, h);
-    if (d.loop) { g.fillStyle = 'rgba(79,209,197,.3)'; g.fillRect(d.loop.start / dur * w, 0, (d.loop.end - d.loop.start) / dur * w, h); }
+    if (d.loop) { g.fillStyle = 'rgba(255,255,255,.16)'; g.fillRect(d.loop.start / dur * w, 0, (d.loop.end - d.loop.start) / dur * w, h); }
     g.fillStyle = '#fff'; g.fillRect(p / dur * w, 0, 2, h);
   }
   // her 1/pps saniyelik dilim için bas / orta / tiz enerjisi (renkli dalga formu)
@@ -860,7 +861,7 @@
       if (i < 0 || i >= n) continue;
       const mn = d.peaks[i * 2], mx = d.peaks[i * 2 + 1], a = Math.max(Math.abs(mn), mx);
       if (d.bands) { const L = d.bands[i * 3], M = d.bands[i * 3 + 1], H = d.bands[i * 3 + 2], s2 = L + M + H + 1e-9; g.fillStyle = `rgb(${Math.round(60 + 195 * L / s2)},${Math.round(60 + 195 * M / s2)},${Math.round(80 + 175 * H / s2)})`; }
-      else g.fillStyle = a > 0.6 ? '#ff7a59' : a > 0.3 ? '#4fd1c5' : '#3a7bd5';
+      else g.fillStyle = a > 0.6 ? '#ff5a4f' : a > 0.3 ? '#e6e6e6' : '#7d7d7d';
       g.fillRect(x, h / 2 - mx * h / 2, 1, Math.max(1, (mx - mn) * h / 2));
     }
     if (d.bpm) {
@@ -871,7 +872,7 @@
         g.fillRect((t - p + span / 2) * pxs, 0, bi % 4 === 0 ? 2 : 1, bi % 4 === 0 ? h : 8);
       }
     }
-    if (d.loop) { g.fillStyle = 'rgba(79,209,197,.18)'; g.fillRect((d.loop.start - p + span / 2) * pxs, 0, (d.loop.end - d.loop.start) * pxs, h); }
+    if (d.loop) { g.fillStyle = 'rgba(255,255,255,.12)'; g.fillRect((d.loop.start - p + span / 2) * pxs, 0, (d.loop.end - d.loop.start) * pxs, h); }
     g.fillStyle = '#fff'; g.fillRect(w / 2, 0, 2, h);
   }
 
@@ -1133,6 +1134,16 @@
       const txt = '#EXTM3U\n' + items.map(it => `#EXTINF:${Math.round(it.dur || -1)},${it.name}\n${it.file}`).join('\n') + '\n';
       U.download(new Blob([txt], { type: 'audio/x-mpegurl' }), (list || 'mr-mars-kutuphane') + '.m3u8');
     },
+    async buildSet() {
+      const pool = (this.rows || this.items).slice();
+      if (pool.length < 2) { U.toast(OS.t('Set için en az iki parça gerekli')); return; }
+      const n = Math.round(+(await U.prompt(OS.t('Kaç parça? (seçili parçadan başlar)'), String(Math.min(12, pool.length)))) || 0); if (!n) return;
+      const start = pool.find(x => x.id === this.sel) || null;
+      const set = DJ.setOrder(pool, start).slice(0, Math.max(2, n));
+      AM.queue = set.map(x => x.id); AM.refresh && AM.refresh();
+      const f = DJ.setFlow(set);
+      U.toast(set.length + ' ' + OS.t('parça Automix kuyruğuna dizildi') + (f != null ? ' · ' + OS.t('akış') + ' ' + f + '%' : ''), 5000);
+    },
     update(id, data) { const it = this.items.find(x => x.id === id); if (it) { if (it.imported) { data = Object.assign({}, data); if (it.bpm) delete data.bpm; if (it.key) delete data.key; } Object.assign(it, data); this.save(); DJ.lib.refresh && DJ.lib.refresh(); } },
     // Kulaklıktan ön dinleme: parçayı decke yüklemeden çalar
     async preview(id) {
@@ -1187,9 +1198,11 @@
       const bpmHi = el('input', { class: 'inp', type: 'number', placeholder: 'BPM max', style: 'width:76px', value: this.bpmHi || '', oninput: e => { this.bpmHi = +e.target.value || 0; this.refresh(); } });
       box.append(el('div', { class: 'row' }, el('b', null, OS.t('Kütüphane')), listSel, harm, bpmLo, bpmHi, search,
         el('select', { onchange: e => { this.sort = e.target.value; this.refresh(); } }, [['name', 'Ada göre'], ['fit', 'Uyuma göre'], ['artist', 'Sanatçıya göre'], ['bpm', 'BPM’e göre'], ['key', 'Tona göre'], ['rating', 'Puana göre'], ['added', 'Eklenme']].map(([v, l]) => el('option', { value: v, selected: v === this.sort }, l))),
+        el('button', { class: 'btn sm primary', onclick: () => DJ.myMusic.open() }, '🎵 ' + window.OS_MY_MUSIC.artist),
         el('button', { class: 'btn sm', onclick: async () => { const fs = await U.pickFiles('audio/*,video/*', true); if (fs.length) this.add(fs); } }, '+ Parça ekle'),
         el('button', { class: 'btn sm', title: OS.t('DJ Kütüphanesi XML, DJ Koleksiyonu NML veya M3U çalma listesi; BPM, ton, beat grid, hot cue ve listeler aktarılır'), onclick: () => this.importForeign() }, 'İçe aktar (XML / NML / M3U)…'),
         el('button', { class: 'btn sm', onclick: e => U.menu(e.clientX, e.clientY, [{ label: 'DJ Kütüphanesi XML (BPM, ton, hot cue, listeler)', onclick: () => this.exportDjXml() }, { label: 'M3U8 (tüm kütüphane)', onclick: () => this.exportM3U() }, ...(this.list ? [{ label: 'M3U8 (' + this.list + ')', onclick: () => this.exportM3U(this.list) }] : [])]) }, 'Dışa aktar ▾'),
+        el('button', { class: 'btn sm', title: OS.t('Seçili parçadan başlayarak görünen listeden ton ve BPM uyumlu bir set kurar ve Automix kuyruğuna dizer'), onclick: () => this.buildSet() }, OS.t('Set kur…')),
         el('span', { class: 'muted' }, OS.t('BPM ve ton, parça bir deck’e ilk yüklendiğinde kaydedilir.'))), list);
       this.refresh = () => {
         if (!list.isConnected && list.parentNode == null && box.isConnected === false) { }
@@ -1288,6 +1301,12 @@
         el('select', { onchange: e => AM.beats = +e.target.value }, [8, 16, 32].map(n => el('option', { value: n, selected: n === AM.beats }, n + ' ' + OS.t('vuruş')))),
         el('label', { class: 'field' }, el('input', { type: 'checkbox', checked: AM.repeat, onchange: e => AM.repeat = e.target.checked }), 'Tekrarla'),
         el('label', { class: 'field' }, el('input', { type: 'checkbox', checked: AM.removePlayed, onchange: e => AM.removePlayed = e.target.checked }), 'Çalınanı listeden çıkar'),
+        el('button', { class: 'btn sm', title: OS.t('Kuyruğu ton uyumu ve BPM akışına göre sırala (çalan parçadan devam eder)'), onclick: () => {
+          const items = AM.queue.map(id => DJ.lib.items.find(x => x.id === id)).filter(Boolean); if (items.length < 2) return;
+          const pl = DJ.decks.slice(0, 2).find(d => d.playing && d.bpm), ref = pl ? { key: pl.shownKey || pl.key, bpm: pl.bpm * (pl.eff || 1) } : null;
+          AM.queue = DJ.setOrder(items, ref).map(x => x.id); AM.refresh();
+          const f = DJ.setFlow(AM.queue.map(id => DJ.lib.items.find(x => x.id === id))); U.toast(OS.t('Uyumlu sıralandı') + (f != null ? ' · ' + OS.t('akış') + ' ' + f + '%' : ''));
+        } }, OS.t('Uyumlu sırala')),
         el('button', { class: 'btn sm', onclick: () => { for (let i = AM.queue.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [AM.queue[i], AM.queue[j]] = [AM.queue[j], AM.queue[i]]; } AM.refresh(); } }, 'Karıştır'),
         el('button', { class: 'btn sm', onclick: () => { AM.queue = []; AM.refresh(); } }, 'Temizle')));
       const list = el('div', { class: 'lib-list' });
@@ -1304,12 +1323,30 @@
   // ---------------- Çalma geçmişi ----------------
   const HI = DJ.hist = { items: (() => { try { return JSON.parse(localStorage.getItem('os.djhist') || '[]'); } catch (e) { return []; } })() };
   HI.add = d => { HI.items.push({ t: Date.now(), name: d.name, bpm: d.bpm ? +(d.bpm * d.rate).toFixed(1) : 0, key: d.key || '', deck: d.L }); if (HI.items.length > 500) HI.items.shift(); try { localStorage.setItem('os.djhist', JSON.stringify(HI.items)); } catch (e) { } HI.refresh && HI.refresh(); };
+  HI.session = () => { const a = HI.items; let i = a.length - 1; while (i > 0 && a[i].t - a[i - 1].t < 45 * 60000) i--; return a.slice(Math.max(0, i)); };
+  HI.export = kind => {
+    const S = HI.session(); if (!S.length) { U.toast(OS.t('Henüz çalınan parça yok.')); return; }
+    const t0 = S[0].t, off = h => (h.t - t0) / 1000, two = n => String(Math.floor(n)).padStart(2, '0');
+    const hms = s => (s >= 3600 ? two(s / 3600) + ':' : '') + two(s / 60 % 60) + ':' + two(s % 60);
+    const q = x => String(x || '').replace(/"/g, "'");
+    let txt, type = 'text/plain;charset=utf-8', ext = kind;
+    if (kind === 'txt') txt = S.map((h, i) => hms(off(h)) + '  ' + (i + 1) + '. ' + h.name + (h.bpm ? '  [' + h.bpm + ' BPM' + (h.key ? ' · ' + h.key : '') + ']' : '')).join('\n') + '\n';
+    else if (kind === 'csv') { type = 'text/csv;charset=utf-8'; txt = '\ufeff#,Time,Name,BPM,Key,Deck\n' + S.map((h, i) => [i + 1, hms(off(h)), '"' + String(h.name).replace(/"/g, '""') + '"', h.bpm || '', h.key || '', h.deck].join(',')).join('\n') + '\n'; }
+    else {
+      const art = (window.OS_MY_MUSIC && OS_MY_MUSIC.artist) || '';
+      txt = 'PERFORMER "' + q(art) + '"\nTITLE "DJ Set ' + new Date(t0).toLocaleDateString() + '"\nFILE "mix.wav" WAVE\n' + S.map((h, i) => { const s = off(h), m = Math.floor(s / 60), sc = Math.floor(s % 60), fr = Math.floor((s % 1) * 75); return '  TRACK ' + two(i + 1) + ' AUDIO\n    TITLE "' + q(h.name) + '"\n    INDEX 01 ' + two(m) + ':' + two(sc) + ':' + two(fr); }).join('\n') + '\n';
+    }
+    U.download(new Blob([txt], { type }), 'dj-set-' + new Date(t0).toISOString().slice(0, 10) + '.' + ext);
+  };
   HI.ui = function () {
     const box = el('div', { class: 'dj-panel' });
     HI.refresh = () => {
       box.innerHTML = '';
       box.append(el('div', { class: 'row' }, el('b', null, OS.t('Geçmiş')),
         el('button', { class: 'btn sm', onclick: () => U.download(new Blob([HI.items.map(h => new Date(h.t).toLocaleString() + '\t' + h.deck + '\t' + h.name + '\t' + h.bpm + ' BPM\t' + h.key).join('\n')], { type: 'text/plain;charset=utf-8' }), 'dj-gecmis.txt') }, 'TXT indir'),
+        el('button', { class: 'btn sm', title: OS.t('Son oturumun zaman damgalı parça listesi (mix açıklaması için)'), onclick: () => HI.export('txt') }, 'Tracklist'),
+        el('button', { class: 'btn sm', title: OS.t('Kaydedilmiş mix dosyası için CUE sayfası'), onclick: () => HI.export('cue') }, 'CUE'),
+        el('button', { class: 'btn sm', onclick: () => HI.export('csv') }, 'CSV'),
         el('button', { class: 'btn sm', onclick: () => { HI.items = []; localStorage.removeItem('os.djhist'); HI.refresh(); } }, 'Temizle')));
       const list = el('div', { class: 'lib-list' });
       HI.items.slice().reverse().slice(0, 100).forEach(h => list.appendChild(el('div', { class: 'lib-row q-row' }, el('span', { class: 'mono' }, new Date(h.t).toLocaleTimeString().slice(0, 5)), el('span', { class: 'ln' }, h.name), el('span', { class: 'mono' }, h.bpm ? String(h.bpm) : ''), el('span', { class: 'mono' }, h.key))));
@@ -1350,6 +1387,49 @@
     return out;
   }
   // Uyum: aynı ton, göreli majör/minör, beşli çemberinde komşu
+  // ---------------- Uyumlu set sıralama (ton çemberi + BPM akışı) ----------------
+  function keyPos(k) {
+    if (!k || k === '…') return null;
+    const m = k.endsWith('m'), r = U.NOTE_NAMES.indexOf(m ? k.slice(0, -1) : k);
+    return r < 0 ? null : { m, p: ((m ? r + 3 : r) * 7) % 12 };
+  }
+  function keyDist(a, b) {
+    const x = keyPos(a), y = keyPos(b); if (!x || !y) return null;
+    const df = Math.abs(x.p - y.p), c = Math.min(df, 12 - df);
+    return c + (x.m === y.m ? 0 : 1);
+  }
+  function bpmGap(a, b) {
+    if (!a || !b) return null;
+    return Math.min(...[0.5, 1, 2].map(k => Math.abs(b * k / a - 1))) * 100;
+  }
+  // Bir parçadan diğerine geçişin maliyeti: ton uzaklığı + BPM farkı (%), hafif yükselen tempo tercih edilir
+  function stepCost(a, b) {
+    const kd = keyDist(a.key, b.key), bg = bpmGap(a.bpm, b.bpm);
+    if (kd == null && bg == null) return 60;
+    let c = (kd == null ? 4 : kd <= 1 ? kd : kd * 2.5) * 3 + (bg == null ? 6 : bg);
+    if (a.bpm && b.bpm && b.bpm < a.bpm * 0.985 && bpmGap(a.bpm, b.bpm) > 1.5) c += 1.5;
+    return c;
+  }
+  DJ.setOrder = function (items, start) {
+    const pool = items.slice(), out = [];
+    let cur = start && start.id ? pool.find(x => x.id === start.id) : null;
+    if (cur) { pool.splice(pool.indexOf(cur), 1); out.push(cur); }
+    else if (start) cur = start;
+    else { pool.sort((a, b) => (a.bpm || 999) - (b.bpm || 999)); cur = pool.shift(); if (!cur) return out; out.push(cur); }
+    while (pool.length) {
+      let bi = 0, bc = Infinity;
+      pool.forEach((x, i) => { const c = stepCost(cur, x); if (c < bc) { bc = c; bi = i; } });
+      cur = pool.splice(bi, 1)[0]; out.push(cur);
+    }
+    return out;
+  };
+  DJ.setFlow = function (list) {
+    let ok = 0, n = 0;
+    for (let i = 1; i < list.length; i++) { const kd = keyDist(list[i - 1].key, list[i].key), bg = bpmGap(list[i - 1].bpm, list[i].bpm); if (kd == null && bg == null) continue; n++; if ((kd == null || kd <= 1) && (bg == null || bg <= 6)) ok++; }
+    return n ? Math.round(ok / n * 100) : null;
+  };
+  DJ._set = { keyDist, bpmGap, stepCost };
+
   function keysFit(a, b) {
     if (!a || !b || a === '…' || b === '…') return false;
     const pos = k => { const m = k.endsWith('m'), r = U.NOTE_NAMES.indexOf(m ? k.slice(0, -1) : k); return r < 0 ? null : { m, p: (((m ? r + 3 : r) * 7) % 12) }; };
@@ -1493,6 +1573,7 @@
       return true;
     }
     const action = settings.map[key];
+    if (!action && built && (cmd === 0x90 ? d2 > 0 : cmd === 0xb0) && DJ.ctrl && DJ.ctrl.unmapped) DJ.ctrl.unmapped(key);
     if (!action || !built) return false;
     const press = cmd === 0x90 && d2 > 0, release = cmd === 0x80 || (cmd === 0x90 && d2 === 0) || (cmd === 0xb0 && d2 === 0 && MOMENTARY.test(action)), v = d2 / 127;
     if (release) {
